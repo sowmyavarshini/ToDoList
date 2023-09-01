@@ -2,15 +2,18 @@ from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
+from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
+import os
 
-
+load_dotenv()
+Secret_key = os.getenv("SECRET_KEY")
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'to-do-list'
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY", Secret_key)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///lists.db")
 Bootstrap(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lists.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 login_manager = LoginManager()
