@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="display">
+<div class="display1">
+
+    <h3>{{current_user.name}}'s To-Do List</h3>
+
+    {% for item in items%}
+    {% if item.user.id == current_user.id %}
+    <ul>
+        <li>
+            <h4>{{item.item}}   -   {{item.date}}   <a href="{{url_for('delete_item', item_id=item.id) }}">✘</a></h4>
+        </li>
+    </ul>
+    {% endif %}
+    {% endfor %}
+
+    <h4><a href="{{ url_for('lists')}}">Add Task</a></h4>
+</div>
+</div>
+
+{% endblock %}
+
+
+
+
+
